@@ -1,0 +1,4 @@
+Compiled 1 Solidity file successfully
+Contract deployed to: 0xE5958c6c7a19ADaEf186D5e3f6d20dfD07ABa516
+Minted NFT #1
+Minted NFT #2
