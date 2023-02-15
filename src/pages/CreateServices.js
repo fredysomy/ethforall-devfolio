@@ -31,6 +31,7 @@ const CreateServices = () => {
     donateAmount: "",
     uri: "",
     unit: "",
+    tickets:""
   });
 
   const handleInputChange = (event) => {
@@ -53,6 +54,7 @@ const CreateServices = () => {
       donateAmount,
       uri,
       unit,
+      tickets
     } = data;
     event.preventDefault();
     console.log("minimum donation amount: " + minDonation);
@@ -95,6 +97,7 @@ const CreateServices = () => {
                 <Input
                   placeholder="Minimum Donation Amount"
                   name="minDonation"
+                  type="number"
                   value={data.minDonation}
                   onChange={handleInputChange}
                 />
@@ -106,6 +109,7 @@ const CreateServices = () => {
                 <Input
                   name="duration"
                   placeholder="Duration Of Service"
+                  type="number"
                   value={data.duration}
                   onChange={handleInputChange}
                 />
@@ -118,6 +122,7 @@ const CreateServices = () => {
                   <Input
                     placeholder="Amount of Service"
                     name="amount"
+                    type="number"
                     value={data.amount}
                     onChange={handleInputChange}
                   />
@@ -134,10 +139,23 @@ const CreateServices = () => {
               </Box>
               <Box width="80%" marginBottom="16px">
                 <Heading fontSize="18px" fontWeight="600" marginBottom="8px">
+                  Number of Tickets
+                  <Input
+                    placeholder="Tickets"
+                    name="tickets"
+                    type="text"
+                    value={data.tickets}
+                    onChange={handleInputChange}
+                  />
+                </Heading>
+              </Box>
+              <Box width="80%" marginBottom="16px">
+                <Heading fontSize="18px" fontWeight="600" marginBottom="8px">
                   Description
                   <Input
                     placeholder="Description"
                     name="description"
+                    type="text"
                     value={data.description}
                     onChange={handleInputChange}
                   />
@@ -149,6 +167,7 @@ const CreateServices = () => {
                 </Heading>
                 <Input
                   placeholder="Contact URI"
+                  type="url"
                   name="uri"
                   value={data.uri}
                   onChange={handleInputChange}
