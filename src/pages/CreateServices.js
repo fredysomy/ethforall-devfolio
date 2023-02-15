@@ -19,7 +19,7 @@ import {
 
 import { useEth } from "../context/EthContext";
 import ABI from "../contracts/newABI.json";
-import { Auth, useAuth } from "@arcana/auth-react";
+import { useAuth } from "@arcana/auth-react";
 
 const CreateServices = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -74,7 +74,7 @@ const CreateServices = () => {
     console.log(donateAmount);
     console.log(unit);
     contract.methods
-      .Add_Services(minDonation, duration, amount, description, uri)
+      .Add_Services(minDonation, duration, amount, description, uri,tickets)
       .send({ from: account })
       .on("transactionHash", (hash) => {
         console.log(hash);

@@ -1,14 +1,12 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState} from "react";
 import {
   Box,
   Container,
   Flex,
   Button,
   Spacer,
-  Modal,
   Heading,
 } from "@chakra-ui/react";
-import { HuddleIframe } from "@huddle01/huddle01-iframe";
 import { Chat } from "@pushprotocol/uiweb";
 import { useEth } from "../context/EthContext";
 import { useAuth } from "@arcana/auth-react";

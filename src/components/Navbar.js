@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, Button, Flex, Spacer, Image } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import logo from "../assets/logo.png";
-import { useEth } from "../context/EthContext";
-import { Auth, useAuth } from "@arcana/auth-react";
+
+import { useAuth } from "@arcana/auth-react";
 
 const Navbar = () => {
   const auth = useAuth();
-  let loggedin = auth.isLoggedIn;
   const logoSize = "35px";
 
   const links = [
@@ -19,7 +18,7 @@ const Navbar = () => {
   ];
   const logout = async () => {
     await auth.logout();
-    loggedin = auth.isLoggedIn;
+    
   };
   const linkStyles = {
     fontSize: "18px",
