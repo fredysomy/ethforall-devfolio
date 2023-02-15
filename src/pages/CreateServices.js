@@ -7,12 +7,22 @@ import {
   Heading,
   Flex,
   Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
 } from "@chakra-ui/react";
+
 import { useEth } from "../context/EthContext";
 import ABI from "../contracts/newABI.json";
 import { Auth, useAuth } from "@arcana/auth-react";
 
 const CreateServices = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const auth = useAuth();
   const account =
     auth.loading === true
@@ -23,6 +33,7 @@ const CreateServices = () => {
   const {
     web3: [web3],
   } = useEth();
+
   const [data, setData] = useState({
     minDonation: "",
     duration: "",
@@ -80,6 +91,24 @@ const CreateServices = () => {
       ) : (
         <>
           {auth.isLoggedIn ? (
+            <>
+            <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Confirm Stake</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                You need to stake 25% of the Donation amount
+              </ModalBody>
+    
+              <ModalFooter>
+                <Button colorScheme='blue' mr={3} onClick={onClose && handleSubmit}>
+                  Stake
+                </Button>
+                <Button onClick={onClose}>Cancel</Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
             <Center
               borderRadius="xl"
               flexDirection="column"
@@ -177,11 +206,12 @@ const CreateServices = () => {
                 colorScheme="blue"
                 marginTop="30px"
                 width="80%"
-                onClick={handleSubmit}
+                onClick={onOpen}
               >
                 CREATE SERVICE
               </Button>
             </Center>
+            </>
           ) : (
             <Heading>Not loggedn in</Heading>
           )}
