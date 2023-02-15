@@ -20,13 +20,21 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { useEth } from "../context/EthContext";
-
+import { useAuth } from "@arcana/auth-react";
 const Donate = () => {
-     const {account: [account] } = useEth();
+  const auth=useAuth();
+     if(auth.loading){
+
+     }
+     else{
+      if(auth.isLoggedIn){
+        const account=auth.user.address;
+      }
+     }
      const { isOpen, onOpen, onClose } = useDisclosure();
      const [selectedRow, setSelectedRow] = useState(0);
 
-
+   
     const tableData = [{
         donation: "10",
         serviceProvider: "ABC",
@@ -49,8 +57,14 @@ const Donate = () => {
 
 return (
     <Center width="100vw" minHeight="80vh" maxWidth="100vw" flexDirection="column">
-        {account ? <>
-        <Heading fontSize="28px" fontWeight="bold" margin="30px" color="#252525">
+        {
+          auth.loading ? <>
+            <Heading>Loading</Heading>
+          </>
+          : <>
+            {
+              auth.isLoggedIn ? <>
+                      <Heading fontSize="28px" fontWeight="bold" margin="30px" color="#252525">
             Donate
         </Heading>
     <TableContainer boxShadow="lg" padding="30px" width="80vw" minHeight="80vh" marginBottom="30px">
@@ -124,7 +138,13 @@ return (
           </ModalFooter>
         </ModalContent>
       </Modal>
-        </> : <Heading>Account Not Connected</Heading>}
+              </>
+              : <>
+                <Heading>Not Logged in</Heading>
+              </>
+            }
+          </>
+        }
     </Center>
 )
 }

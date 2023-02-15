@@ -1,11 +1,24 @@
-import React, {useState} from "react";
-import { Box, Center, Select, Input, Heading, Flex, Button } from "@chakra-ui/react";
+import React, { useState } from "react";
+import {
+  Box,
+  Center,
+  Select,
+  Input,
+  Heading,
+  Flex,
+  Button,
+} from "@chakra-ui/react";
 import { useEth } from "../context/EthContext";
 import ABI from "../contracts/newABI.json";
+import { Auth, useAuth } from "@arcana/auth-react";
 
 const CreateServices = () => {
-    const {account: [account], web3: [web3]} = useEth();
-    const [data, setData] = useState({
+  const auth = useAuth();
+  const account = false;
+  const {
+    web3: [web3],
+  } = useEth();
+  const [data, setData] = useState({
     minDonation: "",
     duration: "",
     amount: "",
@@ -15,18 +28,16 @@ const CreateServices = () => {
     unit: "",
   });
 
-     const handleInputChange = (event) => {
+  const handleInputChange = (event) => {
     setData((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
     }));
   };
 
-
-  var contract = web3 && new web3.eth.Contract(
-    ABI,
-    "0x7E0cDC2A2C793F15BC15A9df835A14c50FfFD831"
-  );
+  var contract =
+    web3 &&
+    new web3.eth.Contract(ABI, "0x7E0cDC2A2C793F15BC15A9df835A14c50FfFD831");
 
   const handleSubmit = async (event) => {
     let {
@@ -53,12 +64,16 @@ const CreateServices = () => {
       .on("receipt", (receipt) => {
         alert("Service has been created");
       });
-  }; 
+  };
 
-    return (
+  return (
     <Center width="100vw" minHeight="80vh">
-        {account ? <>
-        <Center borderRadius="xl" flexDirection="column" width="800px" padding="30px" boxShadow="md">
+      {auth.loading ? (
+        <Heading>Loading</Heading>
+      ) : (
+        <>
+          {auth.isLoggedIn ? (
+            <Center borderRadius="xl" flexDirection="column" width="800px" padding="30px" boxShadow="md">
             <Heading size="lg" marginBottom="30px">Create Services</Heading>
             <Box width="80%" marginBottom="16px">
                 <Heading fontSize="18px" fontWeight="600" marginBottom="8px">
@@ -125,9 +140,14 @@ const CreateServices = () => {
                 CREATE SERVICE
             </Button>
         </Center>
-        </> : <Heading>Account Not Connected</Heading>}
+            
+          ) : (
+            <Heading>Not loggedn in</Heading>
+          )}
+        </>
+      )}
     </Center>
-    )
-}
+  );
+};
 
 export default CreateServices;

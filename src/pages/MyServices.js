@@ -1,13 +1,27 @@
 import React from 'react'
 import { Heading, Center } from '@chakra-ui/react';
 import { useEth } from '../context/EthContext';
-
+import { useAuth } from '@arcana/auth-react';
 const MyServices = () => {
     const {account: [account]} = useEth();
-
+  const auth=useAuth();
   return (
     <Center width="100vw" minHeight="80vh">
-        {account ? <Heading>My Services</Heading> : <Heading>Account Not Connected</Heading>}
+       {
+          auth.loading ? <>
+            <Heading>Loading</Heading>
+          </>
+          : <>
+            {
+              auth.isLoggedIn ? <>
+                <Heading>loggedin</Heading>
+              </>
+              : <>
+                <Heading>Not Logged</Heading>
+              </>
+            }
+          </>
+        }
     </Center>
   )
 }

@@ -11,7 +11,7 @@ const Donate = lazy(() => import("./pages/Donate.js"));
 const Chat = lazy(() => import("./pages/Chat.js"));
 const MyServices = lazy(() => import("./pages/MyServices.js"))
 const Redeem = lazy(() => import("./pages/Redeem.js"))
-
+const ArcanaAuths=lazy(()=>import("./pages/ArcanaAuths.js"))
 function App() {
   const {web3: [, setWeb3 ]} = useEth();
   const loadWeb3 = async () => {
@@ -28,6 +28,7 @@ function App() {
       <Routes>
         <Route path="/"  element={<Home/>}>
           <Route index element={<Welcome />} />
+          <Route path="arcana" element={<ArcanaAuths/>}/>
           <Route path="create-services" element={<CreateServices/>} />
           <Route path="donate" element={<Donate />} />
           <Route path="chat" element={<Chat />} />

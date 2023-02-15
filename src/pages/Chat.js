@@ -1,14 +1,20 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Box, Container, Flex, Button, Spacer, Modal} from "@chakra-ui/react";
+import { Box, Container, Flex, Button, Spacer, Modal,Heading} from "@chakra-ui/react";
 import { HuddleIframe } from "@huddle01/huddle01-iframe";
 import { Chat } from "@pushprotocol/uiweb";
 import { useEth } from "../context/EthContext";
-
+import { useAuth } from '@arcana/auth-react';
 
 
 const Chatbox = () => {
+    const auth=useAuth();
     const [serviceAddress, setServiceAddress] = useState("0x0");
-    const {account: [account], web3: [web3]} = useEth();
+    const account=
+        auth.loading===true ?
+            auth.isLoggedIn===true ? auth.user.address :
+                                null                   :
+                                null;
+    const { web3: [web3]} = useEth();
 
     const messages = [{
         msg: "0x0B523cA2EeA9E2287626Dd7b1246E14A68555e41",
@@ -21,8 +27,16 @@ const Chatbox = () => {
         info: "Degen Talks",
     }]
     
-    return (<Container width="100vw" maxWidth="98vw" minHeight="80vh" boxShadow="md">
-    <Box>
+    return (
+        <Container width="100vw" maxWidth="98vw" minHeight="80vh" boxShadow="md">
+        {
+      auth.loading ? <>
+        <Heading>Loading</Heading>
+      </>
+      : <>
+        {
+          auth.isLoggedIn ? <>
+             <Box>
         <Flex>
             <Box width="75%" padding="8px">
                 {messages.map(data => 
@@ -52,6 +66,13 @@ const Chatbox = () => {
             </Box>
         </Flex>
     </Box>
+          </>
+          : <>
+            <Heading>Not Logged</Heading>
+          </>
+        }
+      </>
+    }
     </Container>)
 }
 
