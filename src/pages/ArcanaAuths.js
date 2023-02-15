@@ -1,14 +1,12 @@
 import { Auth, useAuth } from "@arcana/auth-react";
 import { useNavigate } from "react-router-dom";
 
-const ArcanaAuths=()=> {
-    
-    let navigate=useNavigate();
-    const onLogin = () => {
-      
-        navigate('/')
-      // Route to authenticated page
-    }
+const ArcanaAuths = () => {
+  let navigate = useNavigate();
+  const onLogin = () => {
+    navigate("/");
+    // Route to authenticated page
+  };
   const auth = useAuth();
   return (
     <div>
@@ -18,12 +16,11 @@ const ArcanaAuths=()=> {
         <p>Logged In</p>
       ) : (
         <div>
-          <Auth externalWallet={true} theme={"light"} onLogin={onLogin}/>
+          <Auth externalWallet={true} theme={"light"} onLogin={onLogin} />
         </div>
       )}
     </div>
   );
-}
+};
 
-
-export default ArcanaAuths
+export default ArcanaAuths;

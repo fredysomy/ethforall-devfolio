@@ -14,7 +14,12 @@ import { Auth, useAuth } from "@arcana/auth-react";
 
 const CreateServices = () => {
   const auth = useAuth();
-  const account = false;
+  const account =
+    auth.loading === true
+      ? auth.isLoggedIn === true
+        ? auth.user.address
+        : null
+      : null;
   const {
     web3: [web3],
   } = useEth();
@@ -73,74 +78,91 @@ const CreateServices = () => {
       ) : (
         <>
           {auth.isLoggedIn ? (
-            <Center borderRadius="xl" flexDirection="column" width="800px" padding="30px" boxShadow="md">
-            <Heading size="lg" marginBottom="30px">Create Services</Heading>
-            <Box width="80%" marginBottom="16px">
+            <Center
+              borderRadius="xl"
+              flexDirection="column"
+              width="800px"
+              padding="30px"
+              boxShadow="md"
+            >
+              <Heading size="lg" marginBottom="30px">
+                Create Services
+              </Heading>
+              <Box width="80%" marginBottom="16px">
                 <Heading fontSize="18px" fontWeight="600" marginBottom="8px">
-                    Minimum Donation Amount
-                </Heading>
-                <Input 
-                    placeholder="Minimum Donation Amount" 
-                    name="minDonation"
-                    value={data.minDonation} 
-                    onChange={handleInputChange}
-                />
-            </Box>
-            <Box width="80%" marginBottom="16px">
-                <Heading fontSize="18px" fontWeight="600" marginBottom="8px">
-                    Duration of Service
+                  Minimum Donation Amount
                 </Heading>
                 <Input
-                    name="duration" 
-                    placeholder="Duration Of Service" 
-                    value={data.duration} 
-                    onChange={handleInputChange} />
-            </Box>
-            <Box width="80%" marginBottom="16px">
+                  placeholder="Minimum Donation Amount"
+                  name="minDonation"
+                  value={data.minDonation}
+                  onChange={handleInputChange}
+                />
+              </Box>
+              <Box width="80%" marginBottom="16px">
                 <Heading fontSize="18px" fontWeight="600" marginBottom="8px">
-                    Amount of Service
+                  Duration of Service
+                </Heading>
+                <Input
+                  name="duration"
+                  placeholder="Duration Of Service"
+                  value={data.duration}
+                  onChange={handleInputChange}
+                />
+              </Box>
+              <Box width="80%" marginBottom="16px">
+                <Heading fontSize="18px" fontWeight="600" marginBottom="8px">
+                  Amount of Service
                 </Heading>
                 <Flex gap="16px">
-                    <Input 
-                        placeholder="Amount of Service" 
-                        name="amount"
-                        value={data.amount} 
-                        onChange={handleInputChange} />
-                    <Select 
-                    placeholder="Unit" 
+                  <Input
+                    placeholder="Amount of Service"
+                    name="amount"
+                    value={data.amount}
+                    onChange={handleInputChange}
+                  />
+                  <Select
+                    placeholder="Unit"
                     width="25%"
-                    name="unit" 
-                    value={data.unit} 
-                    onChange={handleInputChange}>
-                        <option>Matic</option>
-                    </Select>
+                    name="unit"
+                    value={data.unit}
+                    onChange={handleInputChange}
+                  >
+                    <option>Matic</option>
+                  </Select>
                 </Flex>
-            </Box>
-            <Box width="80%" marginBottom="16px">
+              </Box>
+              <Box width="80%" marginBottom="16px">
                 <Heading fontSize="18px" fontWeight="600" marginBottom="8px">
-                    Description
-                    <Input 
-                    placeholder="Description" 
+                  Description
+                  <Input
+                    placeholder="Description"
                     name="description"
-                    value={data.description} 
-                    onChange={handleInputChange} />
+                    value={data.description}
+                    onChange={handleInputChange}
+                  />
                 </Heading>
-            </Box>
-            <Box width="80%" marginBottom="16px">
+              </Box>
+              <Box width="80%" marginBottom="16px">
                 <Heading fontSize="18px" fontWeight="600" marginBottom="8px">
-                    Contact URI
+                  Contact URI
                 </Heading>
-                <Input 
-                    placeholder="Contact URI" 
-                    name="uri"
-                    value={data.uri} 
-                    onChange={handleInputChange} />
-            </Box>
-            <Button colorScheme="blue" marginTop="30px" width="80%" onClick={handleSubmit}>
+                <Input
+                  placeholder="Contact URI"
+                  name="uri"
+                  value={data.uri}
+                  onChange={handleInputChange}
+                />
+              </Box>
+              <Button
+                colorScheme="blue"
+                marginTop="30px"
+                width="80%"
+                onClick={handleSubmit}
+              >
                 CREATE SERVICE
-            </Button>
-        </Center>
-            
+              </Button>
+            </Center>
           ) : (
             <Heading>Not loggedn in</Heading>
           )}

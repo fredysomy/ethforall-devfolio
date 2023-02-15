@@ -51,20 +51,20 @@ const Navbar = () => {
         alt="LOGO"
         onClick={console.log("touch")}
       ></Image>
-<Link  {...linkStyles} as={RouterLink} to="/">
-                Home
-              </Link>
-     
-          {links.map(
-            (link, idx) => (
-              // <Box paddingx="32px" paddingy="16px" _hover={{background: "blue"}}>
-              <Link key={idx} {...linkStyles} as={RouterLink} to={link.to}>
-                {link.name}
-              </Link>
-            )
-            // </Box>
-          )}
-   
+      <Link {...linkStyles} as={RouterLink} to="/">
+        Home
+      </Link>
+
+      {links.map(
+        (link, idx) => (
+          // <Box paddingx="32px" paddingy="16px" _hover={{background: "blue"}}>
+          <Link key={idx} {...linkStyles} as={RouterLink} to={link.to}>
+            {link.name}
+          </Link>
+        )
+        // </Box>
+      )}
+
       <Spacer />
 
       {auth.isLoggedIn ? (
