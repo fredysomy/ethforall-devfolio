@@ -17,11 +17,14 @@ const main = async () => {
   )
   await txn.wait()
 
+  //function registerNewService(address provider, uint256 amount, uint256 duration, uint256 maxNumberOfTickets, string memory description,address recvaddress, string memory serviceName) public {
+
   txn = await Contract.registerNewService(
     "0x127F2206E48F024f1Bdbc764B188E9a53a39e6e9",
     "500",
     "100000000",
-    "HUI",
+    "10",
+    "DONATE TO US",
     "0x42456E6C6823bDA6E2C30B6b11c08F172D7940A8",
     "TEST555"
 
