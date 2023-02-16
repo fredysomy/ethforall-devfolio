@@ -46,6 +46,10 @@ contract CC is CCNFT{
         address raddress;
         string rName;
     }
+    struct Stake{
+        address provider;
+        uint256 amount;
+    }
 
     constructor() {
         owner = msg.sender;
@@ -68,6 +72,8 @@ contract CC is CCNFT{
     mapping(address => Receiver) receiversByAddress;
     mapping(address => mapping(uint256 => uint256[])) public donatorsToDonations; //mapping the donations of a user to the serviceID, which is further mapped to an array of tokenIDs of the donations.
     mapping(address => uint256[]) public servicesProvidedByAddress;
+    mapping(uint256 => Stake) public stakes; //serviceId to Stake
+
 
     uint serviceCount = 0;
     uint spcount = 0;
@@ -105,7 +111,43 @@ contract CC is CCNFT{
             uint256 startTime = block.timestamp;
             uint256 endTime = startTime + duration;
             services[serviceCount] = Service(serviceCount, provider, amount, startTime, endTime, duration, maxNumberOfTickets, description, recvaddress, serviceName);
+            _depositStake((amount*0.25), provider, serviceCount);
+            serviceEnabled[serviceCount] = true; 
             serviceCount += 1;
+    }
+
+    function _depositStake(uint _amount, address _provider, uint256 _serviceCount) private{
+        require(_amount > 0, "Amount must be greater than 0");
+        require(usdcToken.balanceOf(msg.sender) >= _amount, "Insufficient balance - YOU NEED TO DEPOSIT 25% of the requested donation.");
+        //service count ond,now we need to check for which service this stake is for.
+        stakes[_serviceCount] = Stake(_provider, _amount);
+
+        usdcToken.transferFrom(msg.sender, address(this), _amount);
+    }
+
+    function _withdrawStake(uint serviceID){
+        require(stakes[serviceID].amount > 0, "No stake to withdraw");
+        require(stakes[serviceID].address == msg.sender, "YOU ARE NOT AUTHORISED TO WITHDRAW THIS STAKE");
+
+        uint256 amount = stakes[msg.sender].amount;
+
+        stakes[msg.sender].amount = 0;
+        serviceEnabled[serviceCount] = false; 
+        usdcToken.transfer(msg.sender, amount);
+    }
+
+    function _reEnableService(uint256 serviceID){
+        Service memory service = services[serviceID];
+        require(service.provider == msg.sender, "You are not authorised to Re-enable the service.");
+        require(serviceEnabled[serviceID] == false, "The service is already enabled.");
+
+        if(stakes[serviceID].amount == 0){
+            _depositStake(service.amount * 0.25, msg.sender, serviceID);
+            serviceEnabled[serviceCount] = true; 
+        }
+        else{
+            serviceEnabled[serviceCount] = true;
+        }
     }
 
     // function registerNewSP(uint spid, address spaddress) public {
@@ -130,7 +172,7 @@ contract CC is CCNFT{
 
                 // transfer USDC
                 //usdcToken.approve(address(this), 2000000000000000000);
-                //usdcToken.transferFrom(msg.sender, service.recvaddress, service.amount);
+                usdcToken.transferFrom(msg.sender, service.recvaddress, service.amount);
        
                 // if(service.amountOfServices == 0 || service.duration - block.timestamp <= 0){
                 // _disableService(service.service_id);
