@@ -18,7 +18,7 @@ function App() {
     web3: [, setWeb3],
   } = useEth();
   const loadWeb3 = async () => {
-    const h = new Web3(Web3.givenProvider || "https://rpc-mumbai.matic.today");
+    const h = new Web3(Web3.givenProvider || "https://rpc.ankr.com/polygon_mumbai");
     setWeb3(h);
   };
   useEffect(() => {

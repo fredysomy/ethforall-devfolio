@@ -14,21 +14,9 @@ theme: 'light', //defaults to dark
 alwaysVisible: false, //defaults to true which is Full UI mode
 chainConfig: {
   chainId: CHAIN.POLYGON_MAINNET, //defaults to CHAIN.ETHEREUM_MAINNET
-  rpcUrl: 'https://polygon-rpc.com', //defaults to 'https://rpc.ankr.com/eth'
+  rpcUrl: 'https://rpc.ankr.com/polygon_mumbai', //defaults to 'https://rpc.ankr.com/eth'
 },
 }); // required
-try {
-  await provider.request({
-    method: 'wallet_addEthereumChain',
-    params: [{
-      chainId: '5001',
-      chainName: 'Mantle',
-      rpcUrls: ['https://rpc.testnet.mantle.xyz/']
-    }]
-  })
-} catch(error) {
-  console.log(error)
-}
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <ChakraProvider theme={theme}>

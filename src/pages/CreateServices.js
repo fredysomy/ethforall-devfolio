@@ -19,6 +19,7 @@ import {
 import { Spinner } from '@chakra-ui/react'
 import { useEth } from "../context/EthContext";
 import ABI from "../contracts/CC.json";
+import NewABI from "../contracts/USDC.json";
 import { useAuth } from "@arcana/auth-react";
 
 const CreateServices = () => {
@@ -57,8 +58,8 @@ const CreateServices = () => {
 
   var contract =
     web3 &&
-    new web3.eth.Contract(ABI, "0x7E0cDC2A2C793F15BC15A9df835A14c50FfFD831");
-
+    new web3.eth.Contract(ABI, "0x6C59Bc0BfE6C5d9D12b221E6f25fE9129b42bFC3",{gasPrice:20000000000});
+  var USDCContract= web3 && new web3.eth.Contract(NewABI,"0x64c61eFac6383d0F8A4cff6aDE93c474ece7AD44")
   const handleSubmit = async (event) => {
     let {
       minDonation,
@@ -87,7 +88,7 @@ const CreateServices = () => {
   };
   const approveUSDC=()=>{
    setLoading(true);
-    contract.methods.approve(auth.user.address,data.amount).call().then((data)=>{
+    USDCContract.methods.approve(auth.user.address,data.amount).call().then((data)=>{
       console.log(data)
     }).then(()=>{
       setApproved(true)
