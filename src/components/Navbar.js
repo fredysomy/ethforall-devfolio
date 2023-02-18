@@ -15,6 +15,7 @@ const Navbar = () => {
     { name: "My Services", to: "my-services" },
     { name: "Redeem", to: "redeem" },
     { name: "Chat", to: "chat" },
+    {name: "Faucet",to:"faucet"}
   ];
   const logout = async () => {
     await auth.logout();

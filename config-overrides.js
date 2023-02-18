@@ -13,6 +13,9 @@ module.exports = function override(config) {
         "url": require.resolve("url"),
         'process/browser': require.resolve('process/browser')
     })
+    config.experiments={
+        topLevelAwait:true,
+    }
     config.resolve.fallback = fallback;
     config.plugins = (config.plugins || []).concat([
         new webpack.ProvidePlugin({

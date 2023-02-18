@@ -1,0 +1,9 @@
+contract.methods
+      .registerNewService(minDonation, duration, amount, description,tickets)
+      .send({ from: auth.user.address })
+      .on("transactionHash", (hash) => {
+        console.log(hash);
+      })
+      .on("receipt", (receipt) => {
+        alert("Service has been created");
+      });

@@ -16,13 +16,16 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-
+import { Spinner } from '@chakra-ui/react'
 import { useEth } from "../context/EthContext";
-import ABI from "../contracts/newABI.json";
+import ABI from "../contracts/CC.json";
 import { useAuth } from "@arcana/auth-react";
 
 const CreateServices = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const [approved,setApproved]=useState(false);
+  let recAdress="0x3e50874CdAb58B6fAf539da09B6966a1BE597D5C";
+  const [load,setLoading]=useState(false);
   const auth = useAuth();
   const account =
     auth.loading === true
@@ -40,11 +43,11 @@ const CreateServices = () => {
     amount: "",
     description: "",
     donateAmount: "",
-    uri: "",
     unit: "",
-    tickets:""
+    tickets:"",
+    name:""
   });
-
+  
   const handleInputChange = (event) => {
     setData((prev) => ({
       ...prev,
@@ -63,9 +66,8 @@ const CreateServices = () => {
       amount,
       description,
       donateAmount,
-      uri,
       unit,
-      tickets
+      tickets,name
     } = data;
     event.preventDefault();
     console.log("minimum donation amount: " + minDonation);
@@ -74,8 +76,8 @@ const CreateServices = () => {
     console.log(donateAmount);
     console.log(unit);
     contract.methods
-      .Add_Services(minDonation, duration, amount, description, uri,tickets)
-      .send({ from: account })
+      .registerNewService(amount,duration,tickets,description,recAdress,name)
+      .send({ from: auth.user.address })
       .on("transactionHash", (hash) => {
         console.log(hash);
       })
@@ -83,6 +85,15 @@ const CreateServices = () => {
         alert("Service has been created");
       });
   };
+  const approveUSDC=()=>{
+   setLoading(true);
+    contract.methods.approve(auth.user.address,data.amount).call().then((data)=>{
+      console.log(data)
+    }).then(()=>{
+      setApproved(true)
+      setLoading(false)
+    })
+  }
 
   return (
     <Center width="100vw" minHeight="80vh">
@@ -121,16 +132,17 @@ const CreateServices = () => {
               </Heading>
               <Box width="80%" marginBottom="16px">
                 <Heading fontSize="18px" fontWeight="600" marginBottom="8px">
-                  Minimum Donation Amount
+                 Service Name
+                  <Input
+                    placeholder="Service name"
+                    name="name"
+                    type="text"
+                    value={data.name}
+                    onChange={handleInputChange}
+                  />
                 </Heading>
-                <Input
-                  placeholder="Minimum Donation Amount"
-                  name="minDonation"
-                  type="number"
-                  value={data.minDonation}
-                  onChange={handleInputChange}
-                />
               </Box>
+              
               <Box width="80%" marginBottom="16px">
                 <Heading fontSize="18px" fontWeight="600" marginBottom="8px">
                   Duration of Service
@@ -190,26 +202,31 @@ const CreateServices = () => {
                   />
                 </Heading>
               </Box>
-              <Box width="80%" marginBottom="16px">
-                <Heading fontSize="18px" fontWeight="600" marginBottom="8px">
-                  Contact URI
-                </Heading>
-                <Input
-                  placeholder="Contact URI"
-                  type="url"
-                  name="uri"
-                  value={data.uri}
-                  onChange={handleInputChange}
-                />
-              </Box>
-              <Button
+              {
+                approved ? <>
+                  <Button
                 colorScheme="blue"
                 marginTop="30px"
                 width="80%"
                 onClick={onOpen}
               >
                 CREATE SERVICE
+               
               </Button>
+                </>
+              :
+              <>
+                 <Button
+                colorScheme="blue"
+                marginTop="30px"
+                width="80%"
+                onClick={approveUSDC}
+              >
+                Approve {load ? <><Spinner></Spinner></>:<></>}
+              </Button>
+              </>
+              }
+              
             </Center>
             </>
           ) : (

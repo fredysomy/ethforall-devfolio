@@ -12,6 +12,7 @@ const Chat = lazy(() => import("./pages/Chat.js"));
 const MyServices = lazy(() => import("./pages/MyServices.js"));
 const Redeem = lazy(() => import("./pages/Redeem.js"));
 const ArcanaAuths = lazy(() => import("./pages/ArcanaAuths.js"));
+const Faucet=lazy(()=> import("./pages/Faucet.js"));
 function App() {
   const {
     web3: [, setWeb3],
@@ -36,6 +37,7 @@ function App() {
           <Route path="chat" element={<Chat />} />
           <Route path="my-services" element={<MyServices />} />
           <Route path="redeem" element={<Redeem />} />
+          <Route path="faucet" element={<Faucet/>}/>
         </Route>
       </Routes>
     </BrowserRouter>
