@@ -98,12 +98,13 @@ const CreateServices = () => {
       })
       .on("receipt", (receipt) => {
         alert("Service has been created");
+        onClose();
       });
   };
   const approveUSDC = () => {
     setLoading(true);
     USDCContract.methods
-      .approve(USDCContract.options.address, data.amount)
+      .approve("0x6C59Bc0BfE6C5d9D12b221E6f25fE9129b42bFC3", data.amount)
       .send({
         from: auth.user.address,
         gas: 1500000,

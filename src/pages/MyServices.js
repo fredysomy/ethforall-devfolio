@@ -21,8 +21,8 @@ const MyServices = () => {
   const getAll = () => {
     contract.methods
       .getServicesDonatedByUser()
-      .send({
-        from: auth.user.address,
+      .call({
+        from:auth.user.address,
         gas: 1500000,
         gasPrice: "30000000000000",
       })

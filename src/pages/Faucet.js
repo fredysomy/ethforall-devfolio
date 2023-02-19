@@ -21,7 +21,7 @@ const Faucet = () => {
       web3 &&
       new web3.eth.Contract(NewABI, "0x64c61eFac6383d0F8A4cff6aDE93c474ece7AD44");
       const mintUSD=()=>{
-        USDCContract.methods.mint10000(USDCContract.options.address).send({
+        USDCContract.methods.mint10000(auth.user.address).send({
           from: auth.user.address,
           gas: 1500000,
           gasPrice: "30000000000000",
