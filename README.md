@@ -41,7 +41,7 @@ https://github.com/fredysomy/ethforall-devfolio.git
 
 ## Install Dependancies
 ```
-run 'npm install'
+run 'npm install --force'
 ```
 ## Run Project
 ```
