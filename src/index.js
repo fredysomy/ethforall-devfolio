@@ -7,7 +7,18 @@ import theme from "./theme";
 import { AuthProvider} from "@arcana/auth";
 import { ProvideAuth } from "@arcana/auth-react";
 const appAddress = "03cf55992aeb8f2785ae25202f4d5ac988980a35";
-const provider = new AuthProvider(`${appAddress}`); // required
+const provider = new AuthProvider(`${appAddress}`, {
+  //required
+  network: "testnet", //defaults to 'testnet'
+  // position: 'right', //defaults to right
+  theme: "dark", //defaults to dark
+  alwaysVisible: true, //defaults to true which is Full UI mode
+  chainConfig: {
+    chainId:"80001", //defaults to CHAIN.ETHEREUM_MAINNET
+    rpcUrl:
+      "https://matic-mumbai.chainstacklabs.com	", //defaults to 'https://rpc.ankr.com/eth'
+  },
+}); // required
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <ChakraProvider theme={theme}>

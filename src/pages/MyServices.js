@@ -16,7 +16,7 @@ const MyServices = () => {
   } = useEth();
   var contract =
     web3 &&
-    new web3.eth.Contract(ABI, "0x6C59Bc0BfE6C5d9D12b221E6f25fE9129b42bFC3");
+    new web3.eth.Contract(ABI, "0x44b32A9059aF53e5a63f2445B31bd0a23f00b2BF");
 
   const getAll = () => {
     contract.methods
