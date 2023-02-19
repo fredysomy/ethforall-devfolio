@@ -4,19 +4,10 @@ import App from "./App";
 import { EthProvider } from "./context/EthContext";
 import { ChakraProvider, CircularProgress } from "@chakra-ui/react";
 import theme from "./theme";
-import { AuthProvider ,CHAIN} from "@arcana/auth";
+import { AuthProvider} from "@arcana/auth";
 import { ProvideAuth } from "@arcana/auth-react";
 const appAddress = "03cf55992aeb8f2785ae25202f4d5ac988980a35";
-const provider = new AuthProvider(`${appAddress}`,{
-network: 'testnet', //defaults to 'testnet'
-position: 'left', //defaults to right
-theme: 'light', //defaults to dark
-alwaysVisible: false, //defaults to true which is Full UI mode
-chainConfig: {
-  chainId: CHAIN.POLYGON_MAINNET, //defaults to CHAIN.ETHEREUM_MAINNET
-  rpcUrl: 'https://rpc.ankr.com/polygon_mumbai', //defaults to 'https://rpc.ankr.com/eth'
-},
-}); // required
+const provider = new AuthProvider(`${appAddress}`); // required
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <ChakraProvider theme={theme}>

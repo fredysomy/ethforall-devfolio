@@ -58,9 +58,7 @@ const CreateServices = () => {
 
   var contract =
     web3 &&
-    new web3.eth.Contract(ABI, "0x6C59Bc0BfE6C5d9D12b221E6f25fE9129b42bFC3", {
-      gasPrice: 20000000000,
-    });
+    new web3.eth.Contract(ABI, "0x6C59Bc0BfE6C5d9D12b221E6f25fE9129b42bFC3");
   var USDCContract =
     web3 &&
     new web3.eth.Contract(NewABI, "0x64c61eFac6383d0F8A4cff6aDE93c474ece7AD44");
@@ -90,7 +88,11 @@ const CreateServices = () => {
         recAdress,
         name
       )
-      .send({ from: auth.user.address })
+      .send({
+        from: auth.user.address,
+        gas: 1500000,
+        gasPrice: "30000000000000",
+      })
       .on("transactionHash", (hash) => {
         console.log(hash);
       })

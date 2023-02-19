@@ -3,7 +3,7 @@ import { useEth } from "./context/EthContext.js";
 import Web3 from "web3";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import "./App.css";
-
+import { Auth,useAuth} from "@arcana/auth-react";
 const Home = lazy(() => import("./pages/Home.js"));
 const Welcome = lazy(() => import("./pages/Welcome.js"));
 const CreateServices = lazy(() => import("./pages/CreateServices.js"));
@@ -13,12 +13,17 @@ const MyServices = lazy(() => import("./pages/MyServices.js"));
 const Redeem = lazy(() => import("./pages/Redeem.js"));
 const ArcanaAuths = lazy(() => import("./pages/ArcanaAuths.js"));
 const Faucet=lazy(()=> import("./pages/Faucet.js"));
-function App() {
+
+
+function App({children}) {
+  const auth=useAuth();
+  
   const {
     web3: [, setWeb3],
   } = useEth();
   const loadWeb3 = async () => {
-    const h = new Web3(Web3.givenProvider || "https://rpc.ankr.com/polygon_mumbai");
+    const arcanaProvider = await auth.connect();
+    const h = new Web3(arcanaProvider);
     setWeb3(h);
   };
   useEffect(() => {
