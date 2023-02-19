@@ -12,7 +12,8 @@ CryptoCares is a social good decentralized application that connects people who 
 - Deploy CC_Flattened.sol (inheriting CCNFT.sol) and USDC.sol to Mantle, Polygon, and FVM, to increase diversity of choice and better experience for users.
 
 ## Video Overview
-{}
+Project Explainer: https://www.youtube.com/watch?v=rW3hREKgHHI
+ETHFORALL Working Demo: 
 
 ## CryptoCares
 https://www.canva.com/design/DAEfNk7WQek/P2AenUmx4lYFgwgitwhuCA/edit?utm_content=DAEfNk7WQek&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
